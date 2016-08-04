@@ -59,6 +59,12 @@ function fixObjectKeys(obj){
   return newObj;
 }
 
+Template.navbar.helpers({
+  docs(){
+    return Documents.find({});
+  }
+});
+
 Template.navbar.events({
   'click .js-add-doc'(event){
     event.preventDefault();
@@ -71,6 +77,28 @@ Template.navbar.events({
           Session.set("docId", res);
         }
       });
+    }
+  },
+  'click .js-load-doc'(event){
+    event.preventDefault();
+    Session.set("docId", this._id);
+  }
+});
+
+Template.docMeta.helpers({
+  doc(){
+    return Documents.findOne({_id: Session.get("docId")});
+  }
+});
+
+Template.editableText.helpers({
+  userCanEdit(doc, Collection){
+    doc = Documents.findOne({_id: Session.get("docId"), owner: Meteor.userId()});
+    if(doc){
+      return true;
+    }
+    else {
+      return false;
     }
   }
 });
