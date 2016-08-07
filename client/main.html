@@ -1,12 +1,10 @@
 <head>
-  <title>textcircle</title>
+  <title>Text Circle</title>
 </head>
 
 <body>
   {{> navbar}}
-
   <div class="container top-margin">
-
     <div class="row">
       <div class="col-md-12">
         {{> docMeta}}
@@ -35,16 +33,14 @@
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">TextCircle</a>
-            <button type="button"
-                    class="navbar-toggle collapsed"
-                    data-toggle="collapse"
-                    data-target=".navbar-collapse">
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target=".navbar-collapse">
 
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -55,28 +51,28 @@
             </a>
           </li>
           <li class="dropdown">
-          <a href="#" class="dropdown-toggle"
-                      data-toggle="dropdown"
-                      role="button"
-                      aria-haspopup="true"
-                      aria-expanded="false">
+            <a href="#" class="dropdown-toggle"
+                        data-toggle="dropdown"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false">
 
-              Documents <span class="caret"></span>
-          </a>
+                Documents <span class="caret"></span>
+            </a>
 
-          <ul class="dropdown-menu">
-            {{#each docs}}
-              <li><a href="#" class="js-load-doc">{{title}}</a></li>
-            {{/each}}
-          </ul>
-        </li>
+            <ul class="dropdown-menu">
+              {{#each docs}}
+                <li><a href="#" class="js-load-doc">{{title}}</a></li>
+              {{/each}}
+            </ul>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {{> loginButtons}} <!-- here -->
         </ul>
       </div>
     </div>
-</nav>
+  </nav>
 </template>
 
 <template name="editor">
@@ -97,6 +93,13 @@
 
 <template name="docMeta">
   {{#with doc}}
-  <span class="h1">{{> editableText collection="documents" field="title"}}</span>
+    <span class="h1">{{> editableText collection="documents" field="title"}}</span>
+    {{#if canEdit}}
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" class="js-tog-private"> private
+      </label>
+    </div>
+    {{/if}}
   {{/with}}
 </template>
