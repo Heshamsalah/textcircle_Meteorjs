@@ -1,36 +1,10 @@
 Meteor.subscribe("documents");
 Meteor.subscribe("editingUsers");
 
-Template.editor.helpers({
-  docid(){
-    getDoc();
-    return Session.get("docId");
-  },
-  config(){
-    return function(editor){
-      editor.setOption("lineNumbers", true);
-      editor.setOption("theme", "cobalt");
-
-      //get the text from the editor
-      editor.on("change", function(cm_editor, info){
-
-        //find the iframe and get its html content
-        var iframe_html_content = $("#viewer_iframe").contents().find("html");
-
-        //inject the html of the iframe with the text
-        //we get from the editor
-        iframe_html_content.html(cm_editor.getValue());
-
-        Meteor.call("addEditingUser");
-      }); //end of editor.on()
-    }; //end of return
-  }
-});
-
 Template.editingUsers.helpers({
   users(){
     var doc, eusers, users;
-    doc = Documents.findOne();
+    doc = Documents.findOne({_id: Session.get("docId")});
     if(!doc){return;}
     eusers = EditingUsers.findOne({docid: doc._id});
     if(!eusers){return;}
@@ -44,15 +18,7 @@ Template.editingUsers.helpers({
   }
 });
 
-function getDoc(){
-  var doc;
-  if(!Session.get("docId")){
-     doc = Documents.findOne();
-     if(doc){
-       Session.set("docId", doc._id);
-     }
-  }
-}
+
 
 function fixObjectKeys(obj){
   var newObj = {};
@@ -62,46 +28,7 @@ function fixObjectKeys(obj){
   return newObj;
 }
 
-Template.navbar.helpers({
-  docs(){
-    return Documents.find();
-  }
-});
 
-Template.navbar.events({
-  'click .js-add-doc'(event){
-    event.preventDefault();
-    if(!Meteor.user()){
-      alert("You need to login first!");
-    }
-    else {
-      Meteor.call("addDoc", function(err, res){
-        if(!err){
-          Session.set("docId", res);
-        }
-      });
-    }
-  },
-  'click .js-load-doc'(event){
-    event.preventDefault();
-    Session.set("docId", this._id);
-  }
-});
-
-Template.docMeta.helpers({
-  doc(){
-    return Documents.findOne({_id: Session.get("docId")});
-  },
-  canEdit(){
-    var doc = Documents.findOne({_id: Session.get("docId")});
-    if(doc.owner == Meteor.userId()){
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-});
 
 Template.editableText.helpers({
   userCanEdit(doc, Collection){
@@ -112,13 +39,5 @@ Template.editableText.helpers({
     else {
       return false;
     }
-  }
-});
-
-Template.docMeta.events({
-  'click .js-tog-private'(event){
-    console.log(event.target.checked);
-    var doc = {_id: Session.get("docId"), isPrivate: event.target.checked};
-    Meteor.call("updateDocPrivacy", doc);
   }
 });
