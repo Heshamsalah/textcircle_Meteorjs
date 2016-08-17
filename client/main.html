@@ -1,36 +1,7 @@
 <head>
   <title>Text Circle</title>
 </head>
-
-<body>
-  {{> navbar}}
-  <div class="container top-margin">
-    <div class="row">
-      <div class="col-md-12">
-        {{> docMeta}}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-12">
-        {{> editingUsers}}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        {{> editor}}
-      </div>
-      <div class="col-md-6">
-        {{> viewer}}
-      </div>
-    </div>
-  </div>
-</body>
-
-<template name="editingUsers">
-  Editors:
-  {{#each users}}
-    <span class="label label-success">{{firstname}}</span>
-  {{/each}}
+<template name="ApplicationLayout">
+  {{> yield "header"}}
+  {{> yield "main"}}
 </template>

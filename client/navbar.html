@@ -2,11 +2,11 @@
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">TextCircle</a>
+        <a class="navbar-brand" href="/">TextCircle</a>
         <button type="button" class="navbar-toggle collapsed"
                 data-toggle="collapse" data-target=".navbar-collapse">
 
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -32,7 +32,7 @@
 
             <ul class="dropdown-menu">
               {{#each docs}}
-                <li><a href="#" class="js-load-doc">{{title}}</a></li>
+                <li><a href="/documents/{{_id}}" class="">{{title}}</a></li>
               {{/each}}
             </ul>
           </li>
