@@ -1,5 +1,6 @@
 Meteor.subscribe("documents");
 Meteor.subscribe("editingUsers");
+Meteor.subscribe("comments");
 
 Template.editingUsers.helpers({
   users(){
